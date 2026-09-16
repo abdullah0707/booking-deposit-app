@@ -1,0 +1,263 @@
+// Miqat backend — data model
+// See d:\Test New Project\PROJECT_HANDOFF.md sibling docs / plan for the
+// algorithms this schema supports (availability, booking state machine,
+// content engine with soft-delete).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  OWNER
+  STAFF
+}
+
+enum BookingStatus {
+  PENDING_PAYMENT
+  AWAITING_MANUAL_VERIFICATION // customer submitted a manual transfer, owner hasn't confirmed yet
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum ServiceLocationType {
+  ON_SITE // customer comes to the business
+  CUSTOMER_ADDRESS // business travels to the customer
+  EITHER
+}
+
+enum PaymentMethodType {
+  STRIPE
+  PAYMOB
+  MANUAL
+}
+
+enum SectionType {
+  HERO
+  SERVICE_LIST
+  CALENDAR
+  CONTACT_FORM
+  GALLERY
+  PRICING
+}
+
+enum Weekday {
+  MON
+  TUE
+  WED
+  THU
+  FRI
+  SAT
+  SUN
+}
+
+// One row — this is a single-tenant deployment (one business per install).
+model Business {
+  id                String   @id @default(uuid())
+  name              String
+  defaultLanguage   String   @default("en") // "en" | "ar"
+  timezone          String   @default("UTC")
+  logoUrl           String?
+  primaryColor      String? // overrides the Miqat default accent when set
+  nextInvoiceNumber Int      @default(1) // atomically incremented — see Invoice model
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  users              User[]
+  services           Service[]
+  workingHours       WorkingHour[]
+  blockedTimes       BlockedTime[]
+  bookings           Booking[]
+  pages              Page[]
+  contactSubmissions ContactSubmission[]
+  paymentMethods     PaymentMethod[]
+  invoices           Invoice[]
+}
+
+model User {
+  id           String   @id @default(uuid())
+  businessId   String
+  business     Business @relation(fields: [businessId], references: [id])
+  email        String   @unique
+  passwordHash String
+  role         UserRole @default(OWNER)
+  createdAt    DateTime @default(now())
+}
+
+model Service {
+  id              String              @id @default(uuid())
+  businessId      String
+  business        Business            @relation(fields: [businessId], references: [id])
+  name            String
+  description     String?
+  durationMinutes Int
+  price           Decimal             @db.Decimal(10, 2)
+  depositAmount   Decimal             @db.Decimal(10, 2)
+  locationType    ServiceLocationType @default(ON_SITE)
+  imageUrl        String?
+  active          Boolean             @default(true)
+  bookings        Booking[]
+  createdAt       DateTime            @default(now())
+}
+
+model WorkingHour {
+  id         String   @id @default(uuid())
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id])
+  weekday    Weekday
+  startTime  String // "09:00"
+  endTime    String // "17:00"
+
+  @@unique([businessId, weekday])
+}
+
+model BlockedTime {
+  id         String   @id @default(uuid())
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id])
+  startsAt   DateTime @db.Timestamptz(3)
+  endsAt     DateTime @db.Timestamptz(3)
+  reason     String?
+}
+
+// NOTE: a Postgres EXCLUDE USING gist constraint on (businessId, tstzrange(startsAt, endsAt))
+// is added via a hand-written follow-up migration after `prisma migrate dev`
+// generates the initial one — Prisma's schema language can't express
+// exclusion constraints directly. This is the DB-level guarantee against
+// double-booking described in the plan; the application-level overlap
+// check in the availability algorithm is the first line of defense, this
+// is the backstop for race conditions.
+model Booking {
+  id                 String         @id @default(uuid())
+  businessId         String
+  business           Business       @relation(fields: [businessId], references: [id])
+  serviceId          String
+  service            Service        @relation(fields: [serviceId], references: [id])
+  customerName       String
+  customerEmail      String
+  customerPhone      String?
+  customerAddress    String? // set when the service's locationType requires an address
+  customerLat        Float?
+  customerLng        Float?
+  startsAt           DateTime       @db.Timestamptz(3)
+  endsAt             DateTime       @db.Timestamptz(3)
+  status             BookingStatus  @default(PENDING_PAYMENT)
+  depositAmount      Decimal        @db.Decimal(10, 2)
+  paymentProvider    String? // "stripe" | "paymob" | "manual" — kept for the existing webhook appliers
+  paymentRef         String? // provider's payment/session id
+  paymentMethodId    String?
+  paymentMethod      PaymentMethod? @relation(fields: [paymentMethodId], references: [id])
+  cancellationReason String?
+  reminderSentAt     DateTime?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  paymentProofs PaymentProof[]
+  invoice       Invoice?
+}
+
+// A business-configured way to pay — either a thin toggle+label over an
+// already env-configured automated gateway (STRIPE/PAYMOB), or a fully
+// buyer-defined MANUAL channel (bank/wallet transfer, InstaPay, etc.).
+// Secrets for STRIPE/PAYMOB stay in .env, read by their existing provider
+// classes — this table only decides what's enabled and what it's called
+// at checkout; `config` holds real, non-secret business data for MANUAL
+// methods (instructions, account/IBAN, optional QR image URL).
+model PaymentMethod {
+  id         String            @id @default(uuid())
+  businessId String
+  business   Business          @relation(fields: [businessId], references: [id])
+  type       PaymentMethodType
+  label      String
+  enabled    Boolean           @default(false)
+  sortOrder  Int               @default(0)
+  config     Json              @default("{}")
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+
+  bookings Booking[]
+}
+
+// Customer-submitted evidence for a MANUAL payment method — kept as its
+// own model (not fields on Booking) so a re-submission keeps history
+// instead of silently overwriting the owner's view of what was sent.
+model PaymentProof {
+  id              String   @id @default(uuid())
+  bookingId       String
+  booking         Booking  @relation(fields: [bookingId], references: [id])
+  imageUrl        String
+  referenceNumber String?
+  submittedAt     DateTime @default(now())
+}
+
+// One per CONFIRMED booking, numbered sequentially per business (not
+// globally) — allocated atomically alongside Business.nextInvoiceNumber
+// inside the same transaction that creates this row (see
+// src/lib/invoices.ts). @@unique is a correctness backstop, not the
+// primary allocation mechanism (that's the atomic increment).
+model Invoice {
+  id         String   @id @default(uuid())
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id])
+  number     Int
+  bookingId  String   @unique
+  booking    Booking  @relation(fields: [bookingId], references: [id])
+  issuedAt   DateTime @default(now())
+
+  @@unique([businessId, number])
+}
+
+// Idempotency ledger for payment provider webhooks — store the provider's
+// event id before applying it, check it first, so a retried webhook
+// delivery can never double-apply a state change.
+model PaymentWebhookEvent {
+  id         String   @id @default(uuid())
+  provider   String
+  eventId    String
+  receivedAt DateTime @default(now())
+
+  @@unique([provider, eventId])
+}
+
+model Page {
+  id         String    @id @default(uuid())
+  businessId String
+  business   Business  @relation(fields: [businessId], references: [id])
+  slug       String
+  title      String
+  order      Int       @default(0)
+  deletedAt  DateTime?
+  sections   Section[]
+
+  @@unique([businessId, slug])
+}
+
+model Section {
+  id          String      @id @default(uuid())
+  pageId      String
+  page        Page        @relation(fields: [pageId], references: [id])
+  type        SectionType
+  order       Int         @default(0)
+  contentJson Json
+  deletedAt   DateTime?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+// Submissions from a CONTACT_FORM section — emailed to the owner and kept
+// here as a durable record in case that email fails to send.
+model ContactSubmission {
+  id         String   @id @default(uuid())
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id])
+  name       String
+  email      String
+  message    String
+  createdAt  DateTime @default(now())
+}

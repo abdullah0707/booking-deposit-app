@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: miqat
+      POSTGRES_PASSWORD: miqat
+      POSTGRES_DB: miqat
+    ports:
+      - "5432:5432"
+    volumes:
+      - miqat_pgdata:/var/lib/postgresql/data
+
+volumes:
+  miqat_pgdata:

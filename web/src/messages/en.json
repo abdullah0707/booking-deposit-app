@@ -1,0 +1,267 @@
+{
+  "app": {
+    "name": "Miqat"
+  },
+  "home": {
+    "kicker": "Booking & deposits",
+    "title": "Book your appointment in a minute",
+    "subtitle": "Pick a service, choose a time, and secure it with a deposit — no back-and-forth messages.",
+    "cta": "Book now",
+    "servicesTitle": "Services"
+  },
+  "contactForm": {
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "Your email",
+    "messagePlaceholder": "How can we help?",
+    "send": "Send message",
+    "sending": "Sending…",
+    "sent": "Thanks — we'll get back to you soon.",
+    "error": "Couldn't send that. Try again."
+  },
+  "nav": {
+    "book": "Book",
+    "services": "Services",
+    "contact": "Contact"
+  },
+  "install": {
+    "title": "Set up Miqat",
+    "subtitle": "A couple of quick steps before you start taking bookings.",
+    "businessNameLabel": "Business name",
+    "languageLabel": "Default language",
+    "timezoneLabel": "Timezone",
+    "next": "Next",
+    "back": "Back",
+    "ownerEmailLabel": "Your email",
+    "ownerPasswordLabel": "Password (min 8 characters)",
+    "settingUp": "Setting up…",
+    "finish": "Finish setup",
+    "genericError": "Couldn't complete setup. Try again.",
+    "doneMessage": "You're all set — your dashboard is ready.",
+    "paymentReminder": "One more thing: add your Stripe key to backend/.env (STRIPE_SECRET_KEY and STRIPE_WEBHOOK_SECRET) and restart the server before accepting real bookings.",
+    "goToDashboard": "Go to dashboard"
+  },
+  "admin": {
+    "nav": {
+      "bookings": "Bookings",
+      "services": "Services",
+      "settings": "Hours",
+      "content": "Content",
+      "business": "Business",
+      "paymentMethods": "Payments",
+      "trash": "Trash"
+    },
+    "paymentMethods": {
+      "title": "Payment methods",
+      "subtitle": "Choose which ways customers can pay their deposit. Card payments use the keys set in your server's .env file; manual methods you write yourself.",
+      "enable": "Enabled",
+      "disable": "Disabled",
+      "label": "Label",
+      "notConfigured": "Set the {type} environment variables on the server first.",
+      "addManual": "Add a manual payment method",
+      "manualLabelPlaceholder": "e.g. InstaPay, Vodafone Cash, Bank Transfer",
+      "instructionsPlaceholder": "Instructions the customer will see (account number, IBAN, etc.)",
+      "accountNamePlaceholder": "Account / recipient name (optional)",
+      "qrLabel": "QR code (optional)",
+      "uploadQr": "Upload QR",
+      "uploading": "Uploading…",
+      "add": "Add method",
+      "saveError": "Couldn't save that.",
+      "type": {
+        "STRIPE": "Card (Stripe)",
+        "PAYMOB": "Card (Paymob)",
+        "MANUAL": "Manual"
+      },
+      "noneEnabledWarning": "No payment method is enabled — customers can't complete a booking yet. Add a manual method below, or enable Stripe/Paymob."
+    },
+    "paymentSetupWarning": {
+      "message": "No payment method is enabled yet — customers can't complete a booking. Set one up in Payments."
+    },
+    "business": {
+      "title": "Business",
+      "subtitle": "Your name, logo, and brand color — shown across the dashboard and your public site.",
+      "nameLabel": "Business name",
+      "nameHint": "Your homepage headline is separate text — edit it under Content → Hero.",
+      "colorLabel": "Brand color",
+      "logoLabel": "Logo",
+      "uploadLogo": "Upload logo",
+      "uploading": "Uploading…",
+      "removeLogo": "Remove",
+      "uploadError": "Upload failed — check the file is an image under 5MB",
+      "save": "Save",
+      "saving": "Saving…",
+      "saved": "Saved"
+    },
+    "login": {
+      "title": "Sign in",
+      "subtitle": "Manage your bookings, services, and hours.",
+      "emailPlaceholder": "Email",
+      "passwordPlaceholder": "Password",
+      "signIn": "Sign in",
+      "signingIn": "Signing in…",
+      "invalidCredentials": "Incorrect email or password.",
+      "genericError": "Something went wrong. Try again."
+    },
+    "bookings": {
+      "title": "Bookings",
+      "loading": "Loading…",
+      "loadError": "Couldn't load bookings.",
+      "empty": "No bookings yet.",
+      "status": {
+        "PENDING_PAYMENT": "Awaiting payment",
+        "AWAITING_MANUAL_VERIFICATION": "Awaiting verification",
+        "CONFIRMED": "Confirmed",
+        "COMPLETED": "Completed",
+        "CANCELLED": "Cancelled",
+        "NO_SHOW": "No-show"
+      },
+      "proofLabel": "Payment proof",
+      "referenceLabel": "Reference",
+      "noProofYet": "No proof submitted yet",
+      "confirmPayment": "Confirm",
+      "rejectPayment": "Reject",
+      "actionError": "Couldn't do that — try again.",
+      "downloadInvoice": "Download invoice"
+    },
+    "services": {
+      "title": "Services",
+      "minutes": "min",
+      "deposit": "deposit",
+      "delete": "Delete",
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel",
+      "empty": "No services yet — add your first one below.",
+      "addService": "Add service",
+      "namePlaceholder": "Service name",
+      "durationPlaceholder": "Duration (min)",
+      "pricePlaceholder": "Price",
+      "depositPlaceholder": "Deposit",
+      "saveError": "Couldn't save this service.",
+      "photoLabel": "Photo",
+      "uploadPhoto": "Upload photo",
+      "changePhoto": "Change photo",
+      "uploading": "Uploading…",
+      "uploadError": "Upload failed — check the file is an image under 5MB",
+      "locationLabel": "Where is this service done?",
+      "locationType": {
+        "ON_SITE": "At your place",
+        "CUSTOMER_ADDRESS": "At the customer's address",
+        "EITHER": "Either"
+      }
+    },
+    "settings": {
+      "title": "Working hours",
+      "subtitle": "Turn on the days you're open and set your hours for each.",
+      "weekday": {
+        "MON": "Monday",
+        "TUE": "Tuesday",
+        "WED": "Wednesday",
+        "THU": "Thursday",
+        "FRI": "Friday",
+        "SAT": "Saturday",
+        "SUN": "Sunday"
+      },
+      "saving": "Saving…",
+      "save": "Save hours",
+      "saved": "Saved"
+    },
+    "content": {
+      "title": "Content",
+      "pagesLabel": "Pages",
+      "newPage": "New page",
+      "pageTitlePlaceholder": "Page title",
+      "pageSlugPlaceholder": "page-slug",
+      "deletePage": "Delete page",
+      "sectionsLabel": "Sections",
+      "addSection": "Add section",
+      "noSections": "No sections yet — add one above.",
+      "edit": "Edit",
+      "done": "Done",
+      "delete": "Delete",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "save": "Save",
+      "saveError": "Couldn't save changes.",
+      "sectionType": {
+        "HERO": "Hero",
+        "SERVICE_LIST": "Service list",
+        "CALENDAR": "Booking calendar",
+        "CONTACT_FORM": "Contact form",
+        "GALLERY": "Gallery",
+        "PRICING": "Pricing"
+      },
+      "fields": {
+        "title": "Title",
+        "subtitle": "Subtitle",
+        "ctaLabel": "Button label",
+        "description": "Description",
+        "imageUrls": "Image URLs (one per line)",
+        "uploadImage": "Upload image",
+        "uploading": "Uploading…",
+        "uploadError": "Upload failed — check the file is an image under 5MB"
+      },
+      "noSettings": "This section has no settings — it renders automatically."
+    },
+    "trash": {
+      "title": "Trash",
+      "subtitle": "Deleted pages and sections are kept for 30 days before they're gone for good.",
+      "empty": "Trash is empty.",
+      "restore": "Restore",
+      "daysLeft": "{days, plural, =0 {expires today} one {# day left} other {# days left}}",
+      "pageLabel": "Page",
+      "sectionLabel": "Section in \"{page}\""
+    }
+  },
+  "booking": {
+    "steps": {
+      "service": "Service",
+      "slot": "Time",
+      "details": "Details",
+      "payment": "Payment"
+    },
+    "loadingServices": "Loading services…",
+    "loadingSlots": "Loading available times…",
+    "noSlots": "No times available this day — try another date.",
+    "minutes": "min",
+    "depositOf": "deposit",
+    "back": "Back",
+    "namePlaceholder": "Full name",
+    "emailPlaceholder": "Email",
+    "phonePlaceholder": "Phone (optional)",
+    "addressLabel": "Where should we come to?",
+    "addressPlaceholder": "Your address",
+    "searchAddressPlaceholder": "Search for your address",
+    "useCurrentLocation": "Use my current location",
+    "eitherAtYourPlace": "At the business",
+    "eitherAtMyAddress": "At my address",
+    "continueToPayment": "Continue to payment",
+    "choosePaymentMethod": "Choose how to pay",
+    "noPaymentMethods": "This business hasn't set up a way to pay yet — please contact them directly to book.",
+    "redirecting": "Redirecting to payment…",
+    "payDeposit": "Pay deposit ·",
+    "slotTaken": "That time was just taken — pick another.",
+    "submitError": "Couldn't create the booking. Try again.",
+    "confirmation": {
+      "confirmedTitle": "You're booked!",
+      "pendingTitle": "Confirming your payment…",
+      "failedTitle": "We couldn't confirm this booking",
+      "pendingHint": "This usually takes a few seconds."
+    },
+    "cancellation": {
+      "title": "Payment cancelled",
+      "subtitle": "Your slot wasn't charged and hasn't been booked.",
+      "tryAgain": "Try again"
+    },
+    "manualPayment": {
+      "title": "Complete your payment",
+      "subtitle": "Follow the instructions below, then upload proof of your transfer.",
+      "referencePlaceholder": "Reference number (optional)",
+      "uploadProof": "Upload payment proof",
+      "uploading": "Uploading…",
+      "submit": "Submit",
+      "submitError": "Couldn't submit that — try again.",
+      "submitted": "Thanks! We'll confirm your booking shortly.",
+      "bookingReference": "Booking reference"
+    }
+  }
+}

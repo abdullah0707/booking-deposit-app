@@ -1,0 +1,267 @@
+{
+  "app": {
+    "name": "ميقات"
+  },
+  "home": {
+    "kicker": "حجز وعربون",
+    "title": "احجز موعدك في دقيقة واحدة",
+    "subtitle": "اختر الخدمة والوقت المناسب، وأكّد حجزك بعربون — من غير رسائل كتير.",
+    "cta": "احجز الآن",
+    "servicesTitle": "الخدمات"
+  },
+  "contactForm": {
+    "namePlaceholder": "اسمك",
+    "emailPlaceholder": "بريدك الإلكتروني",
+    "messagePlaceholder": "إزاي نقدر نساعدك؟",
+    "send": "إرسال",
+    "sending": "جاري الإرسال…",
+    "sent": "شكرًا — هنرد عليك قريب.",
+    "error": "تعذّر الإرسال، جرب تاني."
+  },
+  "nav": {
+    "book": "احجز",
+    "services": "الخدمات",
+    "contact": "تواصل"
+  },
+  "install": {
+    "title": "إعداد ميقات",
+    "subtitle": "خطوتين بسيطتين قبل ما تبدأ تستقبل حجوزات.",
+    "businessNameLabel": "اسم النشاط",
+    "languageLabel": "اللغة الافتراضية",
+    "timezoneLabel": "المنطقة الزمنية",
+    "next": "التالي",
+    "back": "رجوع",
+    "ownerEmailLabel": "بريدك الإلكتروني",
+    "ownerPasswordLabel": "كلمة المرور (8 أحرف على الأقل)",
+    "settingUp": "جاري الإعداد…",
+    "finish": "إنهاء الإعداد",
+    "genericError": "تعذّر إتمام الإعداد، جرب تاني.",
+    "doneMessage": "تمام — لوحة التحكم جاهزة.",
+    "paymentReminder": "حاجة أخيرة: ضيف مفتاح Stripe في backend/.env (STRIPE_SECRET_KEY و STRIPE_WEBHOOK_SECRET) وأعد تشغيل السيرفر قبل استقبال حجوزات حقيقية.",
+    "goToDashboard": "روح للوحة التحكم"
+  },
+  "admin": {
+    "nav": {
+      "bookings": "الحجوزات",
+      "services": "الخدمات",
+      "settings": "أوقات العمل",
+      "content": "المحتوى",
+      "business": "النشاط",
+      "paymentMethods": "الدفع",
+      "trash": "المحذوفات"
+    },
+    "paymentMethods": {
+      "title": "وسائل الدفع",
+      "subtitle": "اختار وسايل الدفع اللي عملاؤك يقدروا يدفعوا بيها العربون. الدفع بالكارت بيستخدم المفاتيح المضبوطة في ملف .env بتاع السيرفر، أما الوسائل اليدوية فبتكتبها إنت.",
+      "enable": "مفعّل",
+      "disable": "متوقف",
+      "label": "الاسم",
+      "notConfigured": "اضبط متغيرات البيئة الخاصة بـ {type} على السيرفر أولاً.",
+      "addManual": "إضافة وسيلة دفع يدوية",
+      "manualLabelPlaceholder": "مثلاً: انستاباي، فودافون كاش، تحويل بنكي",
+      "instructionsPlaceholder": "التعليمات اللي هيشوفها العميل (رقم الحساب، IBAN، إلخ)",
+      "accountNamePlaceholder": "اسم الحساب / المستلم (اختياري)",
+      "qrLabel": "كود QR (اختياري)",
+      "uploadQr": "رفع QR",
+      "uploading": "جاري الرفع…",
+      "add": "إضافة الوسيلة",
+      "saveError": "تعذّر الحفظ.",
+      "type": {
+        "STRIPE": "كارت (Stripe)",
+        "PAYMOB": "كارت (Paymob)",
+        "MANUAL": "يدوي"
+      },
+      "noneEnabledWarning": "مفيش أي وسيلة دفع مفعّلة — العملاء مش هيقدروا يخلّصوا حجزهم. ضيف وسيلة يدوية تحت، أو فعّل Stripe/Paymob."
+    },
+    "paymentSetupWarning": {
+      "message": "مفيش أي وسيلة دفع مفعّلة لسه — العملاء مش هيقدروا يخلّصوا الحجز. اضبط وحدة من صفحة الدفع."
+    },
+    "business": {
+      "title": "النشاط",
+      "subtitle": "اسم نشاطك ولوجوهك ولون علامتك التجارية — بيظهروا في لوحة التحكم وموقعك العام.",
+      "nameLabel": "اسم النشاط",
+      "nameHint": "العنوان الرئيسي في صفحتك نص منفصل — عدّله من المحتوى ← Hero.",
+      "colorLabel": "لون العلامة التجارية",
+      "logoLabel": "اللوجو",
+      "uploadLogo": "رفع لوجو",
+      "uploading": "جاري الرفع…",
+      "removeLogo": "إزالة",
+      "uploadError": "فشل الرفع — تأكد إن الملف صورة وحجمه أقل من 5 ميجا",
+      "save": "حفظ",
+      "saving": "جاري الحفظ…",
+      "saved": "تم الحفظ"
+    },
+    "login": {
+      "title": "تسجيل الدخول",
+      "subtitle": "تابع حجوزاتك وخدماتك وأوقات عملك.",
+      "emailPlaceholder": "البريد الإلكتروني",
+      "passwordPlaceholder": "كلمة المرور",
+      "signIn": "تسجيل الدخول",
+      "signingIn": "جاري الدخول…",
+      "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+      "genericError": "حصلت مشكلة، جرب تاني."
+    },
+    "bookings": {
+      "title": "الحجوزات",
+      "loading": "جاري التحميل…",
+      "loadError": "تعذّر تحميل الحجوزات.",
+      "empty": "لسه مفيش حجوزات.",
+      "status": {
+        "PENDING_PAYMENT": "في انتظار الدفع",
+        "AWAITING_MANUAL_VERIFICATION": "في انتظار المراجعة",
+        "CONFIRMED": "مؤكد",
+        "COMPLETED": "مكتمل",
+        "CANCELLED": "ملغي",
+        "NO_SHOW": "لم يحضر"
+      },
+      "proofLabel": "إثبات الدفع",
+      "referenceLabel": "الرقم المرجعي",
+      "noProofYet": "لسه العميل مرفعش إثبات",
+      "confirmPayment": "تأكيد",
+      "rejectPayment": "رفض",
+      "actionError": "حصل خطأ — جرب تاني.",
+      "downloadInvoice": "تحميل الفاتورة"
+    },
+    "services": {
+      "title": "الخدمات",
+      "minutes": "دقيقة",
+      "deposit": "عربون",
+      "delete": "حذف",
+      "edit": "تعديل",
+      "save": "حفظ",
+      "cancel": "إلغاء",
+      "empty": "لسه مفيش خدمات — ضيف أول خدمة تحت.",
+      "addService": "إضافة خدمة",
+      "namePlaceholder": "اسم الخدمة",
+      "durationPlaceholder": "المدة (دقيقة)",
+      "pricePlaceholder": "السعر",
+      "depositPlaceholder": "العربون",
+      "saveError": "تعذّر حفظ الخدمة.",
+      "photoLabel": "الصورة",
+      "uploadPhoto": "رفع صورة",
+      "changePhoto": "تغيير الصورة",
+      "uploading": "جاري الرفع…",
+      "uploadError": "فشل الرفع — تأكد إن الملف صورة وحجمه أقل من 5 ميجا",
+      "locationLabel": "الخدمة دي بتتعمل فين؟",
+      "locationType": {
+        "ON_SITE": "عندك أنت",
+        "CUSTOMER_ADDRESS": "في عنوان العميل",
+        "EITHER": "الاتنين"
+      }
+    },
+    "settings": {
+      "title": "أوقات العمل",
+      "subtitle": "فعّل الأيام اللي شغال فيها وحدد الأوقات لكل يوم.",
+      "weekday": {
+        "MON": "الإثنين",
+        "TUE": "الثلاثاء",
+        "WED": "الأربعاء",
+        "THU": "الخميس",
+        "FRI": "الجمعة",
+        "SAT": "السبت",
+        "SUN": "الأحد"
+      },
+      "saving": "جاري الحفظ…",
+      "save": "حفظ الأوقات",
+      "saved": "تم الحفظ"
+    },
+    "content": {
+      "title": "المحتوى",
+      "pagesLabel": "الصفحات",
+      "newPage": "صفحة جديدة",
+      "pageTitlePlaceholder": "عنوان الصفحة",
+      "pageSlugPlaceholder": "page-slug",
+      "deletePage": "حذف الصفحة",
+      "sectionsLabel": "السكاشن",
+      "addSection": "إضافة سكشن",
+      "noSections": "لسه مفيش سكاشن — ضيف واحد فوق.",
+      "edit": "تعديل",
+      "done": "تم",
+      "delete": "حذف",
+      "moveUp": "لأعلى",
+      "moveDown": "لأسفل",
+      "save": "حفظ",
+      "saveError": "تعذّر حفظ التعديلات.",
+      "sectionType": {
+        "HERO": "هيرو",
+        "SERVICE_LIST": "قائمة الخدمات",
+        "CALENDAR": "تقويم الحجز",
+        "CONTACT_FORM": "فورم تواصل",
+        "GALLERY": "معرض صور",
+        "PRICING": "الأسعار"
+      },
+      "fields": {
+        "title": "العنوان",
+        "subtitle": "العنوان الفرعي",
+        "ctaLabel": "نص الزرار",
+        "description": "الوصف",
+        "imageUrls": "روابط الصور (كل رابط في سطر)",
+        "uploadImage": "رفع صورة",
+        "uploading": "جاري الرفع…",
+        "uploadError": "فشل الرفع — تأكد إن الملف صورة وحجمه أقل من 5 ميجا"
+      },
+      "noSettings": "السكشن ده مالوش إعدادات — بيتعرض أوتوماتيك."
+    },
+    "trash": {
+      "title": "المحذوفات",
+      "subtitle": "الصفحات والسكاشن المحذوفة بتفضل موجودة 30 يوم قبل ما تتشال نهائيًا.",
+      "empty": "سلة المحذوفات فاضية.",
+      "restore": "استرجاع",
+      "daysLeft": "{days, plural, =0 {بينتهي النهاردة} one {باقي يوم واحد} two {باقي يومين} few {باقي # أيام} other {باقي # يوم}}",
+      "pageLabel": "صفحة",
+      "sectionLabel": "سكشن في \"{page}\""
+    }
+  },
+  "booking": {
+    "steps": {
+      "service": "الخدمة",
+      "slot": "الوقت",
+      "details": "بياناتك",
+      "payment": "الدفع"
+    },
+    "loadingServices": "جاري تحميل الخدمات…",
+    "loadingSlots": "جاري تحميل الأوقات المتاحة…",
+    "noSlots": "مفيش أوقات متاحة اليوم ده — جرب يوم تاني.",
+    "minutes": "دقيقة",
+    "depositOf": "عربون",
+    "back": "رجوع",
+    "namePlaceholder": "الاسم بالكامل",
+    "emailPlaceholder": "البريد الإلكتروني",
+    "phonePlaceholder": "رقم الهاتف (اختياري)",
+    "addressLabel": "نيجي لك فين؟",
+    "addressPlaceholder": "عنوانك",
+    "searchAddressPlaceholder": "دور على عنوانك",
+    "useCurrentLocation": "استخدم موقعي الحالي",
+    "eitherAtYourPlace": "عند النشاط",
+    "eitherAtMyAddress": "في عنواني",
+    "continueToPayment": "كمّل للدفع",
+    "choosePaymentMethod": "اختار طريقة الدفع",
+    "noPaymentMethods": "النشاط لسه ماحددش طريقة دفع — تواصل معاه مباشرة لإتمام الحجز.",
+    "redirecting": "جاري التحويل للدفع…",
+    "payDeposit": "ادفع العربون ·",
+    "slotTaken": "الوقت ده اتحجز لتوه — اختار وقت تاني.",
+    "submitError": "تعذّر إنشاء الحجز، جرب تاني.",
+    "confirmation": {
+      "confirmedTitle": "تم الحجز!",
+      "pendingTitle": "جاري تأكيد الدفع…",
+      "failedTitle": "تعذّر تأكيد الحجز",
+      "pendingHint": "غالبًا بتاخد ثواني بس."
+    },
+    "cancellation": {
+      "title": "تم إلغاء الدفع",
+      "subtitle": "مفيش مبلغ اتخصم وموعدك لسه مش محجوز.",
+      "tryAgain": "حاول تاني"
+    },
+    "manualPayment": {
+      "title": "أكمل عملية الدفع",
+      "subtitle": "اتبع التعليمات تحت، وبعدين ارفع إثبات التحويل.",
+      "referencePlaceholder": "الرقم المرجعي (اختياري)",
+      "uploadProof": "رفع إثبات الدفع",
+      "uploading": "جاري الرفع…",
+      "submit": "إرسال",
+      "submitError": "تعذّر الإرسال — جرب تاني.",
+      "submitted": "شكرًا! هنأكد حجزك قريب.",
+      "bookingReference": "رقم الحجز"
+    }
+  }
+}

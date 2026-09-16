@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+/* Miqat design tokens — light and dark are each tuned deliberately,
+   not a naive invert of one another. See the plan for the full palette
+   rationale. Buyers override --color-accent (and the rest) from the
+   admin dashboard branding screen; these are the shipped demo values. */
+:root {
+  --bg: #faf7f2;
+  --ink: #1e2a28;
+  --accent: #c0684b;
+  --accent-2: #2f6f62;
+  --line: #e7e0d4;
+  --glass-bg: rgb(250 247 242 / 55%);
+  --glass-border: rgb(255 255 255 / 40%);
+}
+
+:root[data-theme="dark"] {
+  --bg: #161d1b;
+  --ink: #ede8df;
+  --accent: #dd8a6e;
+  --accent-2: #5fb3a0;
+  --line: #2b332f;
+  --glass-bg: rgb(22 29 27 / 55%);
+  --glass-border: rgb(255 255 255 / 8%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161d1b;
+    --ink: #ede8df;
+    --accent: #dd8a6e;
+    --accent-2: #5fb3a0;
+    --line: #2b332f;
+    --glass-bg: rgb(22 29 27 / 55%);
+    --glass-border: rgb(255 255 255 / 8%);
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-ink: var(--ink);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-line: var(--line);
+  --font-sans: var(--font-sans);
+  --font-sans-arabic: var(--font-sans-arabic);
+}
+
+html[dir="rtl"] body {
+  font-family: var(--font-sans-arabic), var(--font-sans), sans-serif;
+}
+
+body {
+  font-family: var(--font-sans), sans-serif;
+}
+
+/* Glass surfaces are scoped to icon chips, floating nav, and modals only —
+   never behind scrolling content or body text. See the plan's "Glass
+   surfaces" section for why. */
+.glass-chip {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
