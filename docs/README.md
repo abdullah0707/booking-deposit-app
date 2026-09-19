@@ -168,6 +168,26 @@ to a mocked boundary):
   by default, served from `BACKEND_URL/uploads/...`) alongside pasting
   external URLs — auth-gated, image-type/5MB-limited, verified end to end
   in a real browser (upload → save → renders on the live public page).
+- **Bilingual content editing**: every buyer-authored text field (Hero,
+  Service list/Pricing titles, Contact form) is stored per-locale (EN/AR)
+  and shown as two inputs in the Content editor, each with an
+  "Auto-translate" button (Google Cloud Translation API — see
+  `GOOGLE_TRANSLATE_API_KEY` in `.env.example`; without it the button
+  shows a clear message and the owner just types both languages by hand).
+  The public storefront and mobile app resolve to whichever language the
+  visitor is viewing, with a same-language fallback if only one was
+  filled in. Content saved before this existed keeps working unchanged.
+- **Payment methods**: unlimited buyer-defined manual channels (not just
+  one) — bank transfer, InstaPay, any mobile wallet — each with its own
+  editable label and instructions, alongside Stripe/Paymob. The admin
+  dashboard shows a clear warning banner (on every page, not just
+  Payments) if zero methods are enabled, since that would otherwise be a
+  silent dead end for customers at checkout.
+- **Customer "my bookings" lookup**: no customer accounts, so this reads
+  whichever booking ids this browser has created (kept in `localStorage`)
+  and shows each one's live status via the same public endpoint the
+  confirmation page already polls. Linked from both payment confirmation
+  screens (`Back to home` / `View my bookings`).
 
 `npm run build` (production build, all 23 routes/locales) and `npm run
 start` were both verified working — a real bug surfaced by the build's

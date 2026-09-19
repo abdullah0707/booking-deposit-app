@@ -1,0 +1,4 @@
+# Build output of scripts/package-for-sale.ps1 — a release artifact,
+# regenerate it any time rather than tracking it in git.
+_package-staging/
+*.zip
