@@ -367,6 +367,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Booking reference'**
   String get manualPaymentBookingReference;
+
+  /// No description provided for @passwordPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get passwordPlaceholder;
+
+  /// No description provided for @accountSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get accountSignIn;
+
+  /// No description provided for @accountSigningIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Signing in…'**
+  String get accountSigningIn;
+
+  /// No description provided for @accountLoginTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get accountLoginTitle;
+
+  /// No description provided for @accountLoginSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your booking history and book faster next time.'**
+  String get accountLoginSubtitle;
+
+  /// No description provided for @accountInvalidCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect email or password.'**
+  String get accountInvalidCredentials;
+
+  /// No description provided for @accountGenericError.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong — try again.'**
+  String get accountGenericError;
+
+  /// No description provided for @accountCreateOne.
+  ///
+  /// In en, this message translates to:
+  /// **'No account yet? Create one'**
+  String get accountCreateOne;
+
+  /// No description provided for @accountRegisterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an account'**
+  String get accountRegisterTitle;
+
+  /// No description provided for @accountRegisterSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save your booking history and skip retyping your details next time.'**
+  String get accountRegisterSubtitle;
+
+  /// No description provided for @accountPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Password (min 8 characters)'**
+  String get accountPasswordHint;
+
+  /// No description provided for @accountEmailTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'An account with this email already exists.'**
+  String get accountEmailTaken;
+
+  /// No description provided for @accountCreating.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating…'**
+  String get accountCreating;
+
+  /// No description provided for @accountCreateAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get accountCreateAccount;
+
+  /// No description provided for @accountLogOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get accountLogOut;
+
+  /// No description provided for @myBookingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My bookings'**
+  String get myBookingsTitle;
+
+  /// No description provided for @myBookingsSignInPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to see your booking history.'**
+  String get myBookingsSignInPrompt;
+
+  /// No description provided for @myBookingsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No bookings yet.'**
+  String get myBookingsEmpty;
+
+  /// No description provided for @bookingStatusPendingPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting payment'**
+  String get bookingStatusPendingPayment;
+
+  /// No description provided for @bookingStatusAwaitingVerification.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting verification'**
+  String get bookingStatusAwaitingVerification;
+
+  /// No description provided for @bookingStatusConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get bookingStatusConfirmed;
+
+  /// No description provided for @bookingStatusCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get bookingStatusCompleted;
+
+  /// No description provided for @bookingStatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get bookingStatusCancelled;
 }
 
 class _AppLocalizationsDelegate

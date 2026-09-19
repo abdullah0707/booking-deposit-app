@@ -2,6 +2,36 @@
   "app": {
     "name": "ميقات"
   },
+  "account": {
+    "link": {
+      "signIn": "تسجيل الدخول"
+    },
+    "login": {
+      "title": "تسجيل الدخول",
+      "subtitle": "شوف حجوزاتك السابقة واحجز أسرع في المرة الجاية.",
+      "emailPlaceholder": "الإيميل",
+      "passwordPlaceholder": "كلمة السر",
+      "signIn": "دخول",
+      "signingIn": "جاري الدخول…",
+      "invalidCredentials": "الإيميل أو كلمة السر غلط.",
+      "genericError": "حصل خطأ — جرب تاني.",
+      "noAccount": "لسه معملتش حساب؟",
+      "createOne": "اعمل واحد"
+    },
+    "register": {
+      "title": "إنشاء حساب",
+      "subtitle": "احفظ سجل حجوزاتك وماتكتبش بياناتك تاني في المرة الجاية.",
+      "namePlaceholder": "الاسم بالكامل",
+      "emailPlaceholder": "الإيميل",
+      "passwordPlaceholder": "كلمة السر (8 حروف على الأقل)",
+      "createAccount": "إنشاء الحساب",
+      "creating": "جاري الإنشاء…",
+      "emailTaken": "في حساب بنفس الإيميل ده موجود بالفعل.",
+      "genericError": "حصل خطأ — جرب تاني.",
+      "haveAccount": "عندك حساب بالفعل؟",
+      "signIn": "دخول"
+    }
+  },
   "home": {
     "kicker": "حجز وعربون",
     "title": "احجز موعدك في دقيقة واحدة",
@@ -274,8 +304,11 @@
     "myBookings": {
       "title": "طلباتي",
       "backToHome": "رجوع للرئيسية",
+      "signIn": "تسجيل الدخول",
+      "logOut": "تسجيل الخروج",
+      "guestHint": "بتحجز كضيف — سجّل دخول أو اعمل حساب عشان تشوف سجل حجوزاتك من أي جهاز.",
       "loading": "جاري تحميل طلباتك…",
-      "empty": "مفيش أي طلبات مسجلة على الجهاز ده لسه.",
+      "empty": "مفيش أي طلبات لسه.",
       "deposit": "العربون",
       "status": {
         "PENDING_PAYMENT": "بانتظار الدفع",

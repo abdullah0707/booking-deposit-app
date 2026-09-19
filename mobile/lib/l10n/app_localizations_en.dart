@@ -145,4 +145,75 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get manualPaymentBookingReference => 'Booking reference';
+
+  @override
+  String get passwordPlaceholder => 'Password';
+
+  @override
+  String get accountSignIn => 'Sign in';
+
+  @override
+  String get accountSigningIn => 'Signing in…';
+
+  @override
+  String get accountLoginTitle => 'Sign in';
+
+  @override
+  String get accountLoginSubtitle =>
+      'Check your booking history and book faster next time.';
+
+  @override
+  String get accountInvalidCredentials => 'Incorrect email or password.';
+
+  @override
+  String get accountGenericError => 'Something went wrong — try again.';
+
+  @override
+  String get accountCreateOne => 'No account yet? Create one';
+
+  @override
+  String get accountRegisterTitle => 'Create an account';
+
+  @override
+  String get accountRegisterSubtitle =>
+      'Save your booking history and skip retyping your details next time.';
+
+  @override
+  String get accountPasswordHint => 'Password (min 8 characters)';
+
+  @override
+  String get accountEmailTaken => 'An account with this email already exists.';
+
+  @override
+  String get accountCreating => 'Creating…';
+
+  @override
+  String get accountCreateAccount => 'Create account';
+
+  @override
+  String get accountLogOut => 'Log out';
+
+  @override
+  String get myBookingsTitle => 'My bookings';
+
+  @override
+  String get myBookingsSignInPrompt => 'Sign in to see your booking history.';
+
+  @override
+  String get myBookingsEmpty => 'No bookings yet.';
+
+  @override
+  String get bookingStatusPendingPayment => 'Awaiting payment';
+
+  @override
+  String get bookingStatusAwaitingVerification => 'Awaiting verification';
+
+  @override
+  String get bookingStatusConfirmed => 'Confirmed';
+
+  @override
+  String get bookingStatusCompleted => 'Completed';
+
+  @override
+  String get bookingStatusCancelled => 'Cancelled';
 }

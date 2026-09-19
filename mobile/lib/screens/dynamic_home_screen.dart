@@ -1,10 +1,12 @@
 import "package:flutter/material.dart";
 import "package:phosphor_flutter/phosphor_flutter.dart";
 import "../api/api_client.dart";
+import "../auth/customer_auth.dart";
 import "../l10n/app_localizations.dart";
 import "../models/content_models.dart";
 import "../widgets/glass_chip.dart";
 import "booking_flow_screen.dart";
+import "customer_bookings_screen.dart";
 import "section_renderer.dart";
 
 class DynamicHomeScreen extends StatefulWidget {
@@ -62,6 +64,16 @@ class _DynamicHomeScreenState extends State<DynamicHomeScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         actions: [
+          ListenableBuilder(
+            listenable: customerAuth,
+            builder: (context, _) => IconButton(
+              icon: Icon(PhosphorIcons.userCircle()),
+              tooltip: customerAuth.customer?.name,
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const CustomerBookingsScreen()),
+              ),
+            ),
+          ),
           TextButton(
             onPressed: () => widget.onLocaleChanged(Locale(isArabic ? "en" : "ar")),
             child: Text(isArabic ? "EN" : "AR"),

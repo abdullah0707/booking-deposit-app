@@ -20,19 +20,22 @@ class ApiException implements Exception {
 }
 
 class ApiClient {
-  Future<dynamic> get(String path) async {
-    final res = await http.get(Uri.parse("$_apiUrl$path"));
+  Future<dynamic> get(String path, {String? token}) async {
+    final res = await http.get(Uri.parse("$_apiUrl$path"), headers: _authHeaders(token));
     return _handle(res);
   }
 
-  Future<dynamic> post(String path, Map<String, dynamic> body) async {
+  Future<dynamic> post(String path, Map<String, dynamic> body, {String? token}) async {
     final res = await http.post(
       Uri.parse("$_apiUrl$path"),
-      headers: {"Content-Type": "application/json"},
+      headers: {"Content-Type": "application/json", ..._authHeaders(token)},
       body: jsonEncode(body),
     );
     return _handle(res);
   }
+
+  Map<String, String> _authHeaders(String? token) =>
+      token != null ? {"Authorization": "Bearer $token"} : {};
 
   /// Multipart upload — used for the manual-payment proof screenshot.
   /// Fields other than the file (e.g. a reference number) go in [fields].

@@ -2,6 +2,36 @@
   "app": {
     "name": "Miqat"
   },
+  "account": {
+    "link": {
+      "signIn": "Sign in"
+    },
+    "login": {
+      "title": "Sign in",
+      "subtitle": "Check your booking history and book faster next time.",
+      "emailPlaceholder": "Email",
+      "passwordPlaceholder": "Password",
+      "signIn": "Sign in",
+      "signingIn": "Signing in…",
+      "invalidCredentials": "Incorrect email or password.",
+      "genericError": "Something went wrong — try again.",
+      "noAccount": "No account yet?",
+      "createOne": "Create one"
+    },
+    "register": {
+      "title": "Create an account",
+      "subtitle": "Save your booking history and skip retyping your details next time.",
+      "namePlaceholder": "Full name",
+      "emailPlaceholder": "Email",
+      "passwordPlaceholder": "Password (min 8 characters)",
+      "createAccount": "Create account",
+      "creating": "Creating…",
+      "emailTaken": "An account with this email already exists.",
+      "genericError": "Something went wrong — try again.",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in"
+    }
+  },
   "home": {
     "kicker": "Booking & deposits",
     "title": "Book your appointment in a minute",
@@ -274,8 +304,11 @@
     "myBookings": {
       "title": "My bookings",
       "backToHome": "Back to home",
+      "signIn": "Sign in",
+      "logOut": "Log out",
+      "guestHint": "Booking as a guest — sign in or create an account to see your history from any device.",
       "loading": "Loading your bookings…",
-      "empty": "No bookings found on this device yet.",
+      "empty": "No bookings yet.",
       "deposit": "Deposit",
       "status": {
         "PENDING_PAYMENT": "Awaiting payment",

@@ -7,6 +7,7 @@ import { api, ApiError } from "@/lib/api";
 import { LocationPicker, type LocationValue } from "@/components/LocationPicker";
 import { ManualPaymentScreen } from "@/components/ManualPaymentScreen";
 import { saveMyBooking } from "@/lib/myBookings";
+import { useCustomerAuth } from "@/lib/customerAuth/CustomerAuthContext";
 
 type LocationType = "ON_SITE" | "CUSTOMER_ADDRESS" | "EITHER";
 
@@ -50,6 +51,7 @@ function toDateKey(d: Date): string {
 export function BookingWizard() {
   const t = useTranslations("booking");
   const format = useFormatter();
+  const { customer, token: customerToken } = useCustomerAuth();
 
   const [step, setStep] = useState<Step>("service");
   const [services, setServices] = useState<Service[] | null>(null);
@@ -77,6 +79,17 @@ export function BookingWizard() {
     api.get<Service[]>("/services").then(setServices);
     api.get<PaymentMethod[]>("/payment-methods").then(setPaymentMethods);
   }, []);
+
+  // Signed-in customers shouldn't have to retype what the account already
+  // knows — one-time sync from the auth context (which itself resolves
+  // async from localStorage), only while both fields are still untouched
+  // so it never overwrites someone mid-edit.
+  /* eslint-disable-next-line react-hooks/set-state-in-effect */
+  useEffect(() => {
+    if (!customer) return;
+    setName((current) => current || customer.name);
+    setEmail((current) => current || customer.email);
+  }, [customer]);
 
   const needsAddress =
     !!selectedService &&
@@ -110,17 +123,23 @@ export function BookingWizard() {
     try {
       const result = await api.post<
         { bookingId: string; checkoutUrl: string } | { bookingId: string; instructions: PaymentMethod["config"] }
-      >("/bookings", {
-        serviceId: selectedService.id,
-        paymentMethodId: method.id,
-        startsAt: selectedSlot.startsAt,
-        customerName: name,
-        customerEmail: email,
-        customerPhone: phone || undefined,
-        customerAddress: needsAddress ? location.address : undefined,
-        customerLat: needsAddress ? location.lat : undefined,
-        customerLng: needsAddress ? location.lng : undefined,
-      });
+      >(
+        "/bookings",
+        {
+          serviceId: selectedService.id,
+          paymentMethodId: method.id,
+          startsAt: selectedSlot.startsAt,
+          customerName: name,
+          customerEmail: email,
+          customerPhone: phone || undefined,
+          customerAddress: needsAddress ? location.address : undefined,
+          customerLat: needsAddress ? location.lat : undefined,
+          customerLng: needsAddress ? location.lng : undefined,
+        },
+        // Optional — a signed-in customer's booking links to their account
+        // (see backend's optionalCustomerAuth); guests just omit this.
+        customerToken,
+      );
       saveMyBooking(result.bookingId);
       if ("checkoutUrl" in result) {
         // eslint-disable-next-line react-hooks/immutability -- handing off to the external checkout page is a real navigation, not a captured-variable mutation

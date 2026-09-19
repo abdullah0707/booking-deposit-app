@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing, rtlLocales } from "@/i18n/routing";
 import { AuthProvider } from "@/lib/auth/AuthContext";
+import { CustomerAuthProvider } from "@/lib/customerAuth/CustomerAuthContext";
 import "../globals.css";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
@@ -74,7 +75,9 @@ export default async function LocaleLayout({
         className={`${plexSans.variable} ${plexSansArabic.variable} min-h-screen bg-bg text-ink antialiased`}
       >
         <NextIntlClientProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <CustomerAuthProvider>{children}</CustomerAuthProvider>
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>

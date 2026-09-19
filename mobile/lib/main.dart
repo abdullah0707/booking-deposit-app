@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_localizations/flutter_localizations.dart";
 import "api/api_client.dart";
+import "auth/customer_auth.dart";
 import "l10n/app_localizations.dart";
 import "screens/dynamic_home_screen.dart";
 import "theme/miqat_theme.dart";
@@ -25,6 +26,7 @@ class _MiqatAppState extends State<MiqatApp> {
   void initState() {
     super.initState();
     _loadBusiness();
+    customerAuth.load();
   }
 
   // The web app's Business settings screen (name/logo/accent color) is

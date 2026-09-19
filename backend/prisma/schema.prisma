@@ -70,6 +70,7 @@ model Business {
   updatedAt         DateTime @updatedAt
 
   users              User[]
+  customers          Customer[]
   services           Service[]
   workingHours       WorkingHour[]
   blockedTimes       BlockedTime[]
@@ -88,6 +89,26 @@ model User {
   passwordHash String
   role         UserRole @default(OWNER)
   createdAt    DateTime @default(now())
+}
+
+// A registered customer account — separate from User (which is
+// staff/owner login for the admin dashboard). Optional: the booking flow
+// still works fully as a guest without one (see Booking.customerId,
+// nullable) — an account just lets a returning customer see their real
+// booking history instead of the device-local fallback in
+// web/src/lib/myBookings.ts.
+model Customer {
+  id           String   @id @default(uuid())
+  businessId   String
+  business     Business @relation(fields: [businessId], references: [id])
+  name         String
+  email        String
+  passwordHash String
+  createdAt    DateTime @default(now())
+
+  bookings Booking[]
+
+  @@unique([businessId, email])
 }
 
 model Service {
@@ -139,6 +160,8 @@ model Booking {
   business           Business       @relation(fields: [businessId], references: [id])
   serviceId          String
   service            Service        @relation(fields: [serviceId], references: [id])
+  customerId         String? // set when a logged-in customer made this booking; null for guest checkout
+  customer           Customer?      @relation(fields: [customerId], references: [id])
   customerName       String
   customerEmail      String
   customerPhone      String?

@@ -144,4 +144,75 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get manualPaymentBookingReference => 'رقم الحجز';
+
+  @override
+  String get passwordPlaceholder => 'كلمة السر';
+
+  @override
+  String get accountSignIn => 'دخول';
+
+  @override
+  String get accountSigningIn => 'جاري الدخول…';
+
+  @override
+  String get accountLoginTitle => 'تسجيل الدخول';
+
+  @override
+  String get accountLoginSubtitle =>
+      'شوف حجوزاتك السابقة واحجز أسرع في المرة الجاية.';
+
+  @override
+  String get accountInvalidCredentials => 'الإيميل أو كلمة السر غلط.';
+
+  @override
+  String get accountGenericError => 'حصل خطأ — جرب تاني.';
+
+  @override
+  String get accountCreateOne => 'لسه معملتش حساب؟ اعمل واحد';
+
+  @override
+  String get accountRegisterTitle => 'إنشاء حساب';
+
+  @override
+  String get accountRegisterSubtitle =>
+      'احفظ سجل حجوزاتك وماتكتبش بياناتك تاني في المرة الجاية.';
+
+  @override
+  String get accountPasswordHint => 'كلمة السر (8 حروف على الأقل)';
+
+  @override
+  String get accountEmailTaken => 'في حساب بنفس الإيميل ده موجود بالفعل.';
+
+  @override
+  String get accountCreating => 'جاري الإنشاء…';
+
+  @override
+  String get accountCreateAccount => 'إنشاء الحساب';
+
+  @override
+  String get accountLogOut => 'تسجيل الخروج';
+
+  @override
+  String get myBookingsTitle => 'طلباتي';
+
+  @override
+  String get myBookingsSignInPrompt => 'سجّل دخولك عشان تشوف سجل حجوزاتك.';
+
+  @override
+  String get myBookingsEmpty => 'مفيش أي حجوزات لسه.';
+
+  @override
+  String get bookingStatusPendingPayment => 'بانتظار الدفع';
+
+  @override
+  String get bookingStatusAwaitingVerification => 'بانتظار التحقق';
+
+  @override
+  String get bookingStatusConfirmed => 'مؤكد';
+
+  @override
+  String get bookingStatusCompleted => 'مكتمل';
+
+  @override
+  String get bookingStatusCancelled => 'ملغي';
 }

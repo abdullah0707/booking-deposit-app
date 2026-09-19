@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { SectionRenderer } from "@/components/sections/SectionRenderer";
 import { BookingWizard } from "@/components/BookingWizard";
+import { AccountLink } from "@/components/AccountLink";
 import type { Page } from "@/lib/sections/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
@@ -36,7 +37,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   if (!page || !page.sections || page.sections.length === 0) {
     const t = await getTranslations("home");
     return (
-      <main className="min-h-screen">
+      <main className="relative min-h-screen">
+        <AccountLink />
         <div className="mx-auto flex flex-col items-center gap-6 px-6 pt-20 pb-12 text-center">
           <div className="space-y-3">
             <p className="text-xs font-semibold tracking-[0.14em] text-accent uppercase">
@@ -52,7 +54,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   }
 
   return (
-    <main className="min-h-screen">
+    <main className="relative min-h-screen">
+      <AccountLink />
       {page.sections.map((section) => (
         <SectionRenderer key={section.id} section={section} businessLogoUrl={businessLogoUrl} />
       ))}

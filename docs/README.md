@@ -183,11 +183,16 @@ to a mocked boundary):
   dashboard shows a clear warning banner (on every page, not just
   Payments) if zero methods are enabled, since that would otherwise be a
   silent dead end for customers at checkout.
-- **Customer "my bookings" lookup**: no customer accounts, so this reads
-  whichever booking ids this browser has created (kept in `localStorage`)
-  and shows each one's live status via the same public endpoint the
-  confirmation page already polls. Linked from both payment confirmation
-  screens (`Back to home` / `View my bookings`).
+- **Customer accounts (optional)**: a customer can register/sign in
+  (`/account/register`, `/account/login` on web; the account icon on
+  mobile) to get real, cross-device booking history via
+  `GET /customers/me/bookings` — separate from the owner/staff login
+  (`Customer` model, its own JWT shape that can never pass as a staff
+  token). Booking still works fully as a guest with no account: a signed-
+  in customer's booking just links to their account automatically
+  (`optionalCustomerAuth`), and their name/email prefill on their next
+  booking. Guests without an account still get a lightweight device-local
+  "my bookings" (kept in `localStorage`, web only) as a fallback.
 
 `npm run build` (production build, all 23 routes/locales) and `npm run
 start` were both verified working — a real bug surfaced by the build's

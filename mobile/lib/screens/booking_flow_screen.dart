@@ -4,6 +4,7 @@ import "package:intl/intl.dart";
 import "package:phosphor_flutter/phosphor_flutter.dart";
 import "package:url_launcher/url_launcher.dart";
 import "../api/api_client.dart";
+import "../auth/customer_auth.dart";
 import "../l10n/app_localizations.dart";
 import "../models/booking_models.dart";
 import "../theme/miqat_theme.dart";
@@ -66,6 +67,12 @@ class _BookingFlowScreenState extends State<BookingFlowScreen> {
     _selectedDate = _days.first;
     _loadServices();
     _loadPaymentMethods();
+    // Signed-in customers shouldn't have to retype what the account
+    // already knows — mirrors the web app's BookingWizard prefill.
+    if (customerAuth.customer != null) {
+      _nameController.text = customerAuth.customer!.name;
+      _emailController.text = customerAuth.customer!.email;
+    }
   }
 
   @override
@@ -143,17 +150,23 @@ class _BookingFlowScreenState extends State<BookingFlowScreen> {
       _submitting = true;
     });
     try {
-      final result = await apiClient.post("/bookings", {
-        "serviceId": _selectedService!.id,
-        "paymentMethodId": method.id,
-        "startsAt": _selectedSlot!.startsAt.toIso8601String(),
-        "customerName": _nameController.text,
-        "customerEmail": _emailController.text,
-        if (_phoneController.text.isNotEmpty) "customerPhone": _phoneController.text,
-        if (_needsAddress && _addressText != null) "customerAddress": _addressText,
-        if (_needsAddress && _addressLat != null) "customerLat": _addressLat,
-        if (_needsAddress && _addressLng != null) "customerLng": _addressLng,
-      });
+      final result = await apiClient.post(
+        "/bookings",
+        {
+          "serviceId": _selectedService!.id,
+          "paymentMethodId": method.id,
+          "startsAt": _selectedSlot!.startsAt.toIso8601String(),
+          "customerName": _nameController.text,
+          "customerEmail": _emailController.text,
+          if (_phoneController.text.isNotEmpty) "customerPhone": _phoneController.text,
+          if (_needsAddress && _addressText != null) "customerAddress": _addressText,
+          if (_needsAddress && _addressLat != null) "customerLat": _addressLat,
+          if (_needsAddress && _addressLng != null) "customerLng": _addressLng,
+        },
+        // Optional — a signed-in customer's booking links to their account
+        // (see backend's optionalCustomerAuth); guests just omit this.
+        token: customerAuth.token,
+      );
       if (result["checkoutUrl"] != null) {
         final checkoutUrl = result["checkoutUrl"] as String;
         final launched = await launchUrl(Uri.parse(checkoutUrl), mode: LaunchMode.externalApplication);

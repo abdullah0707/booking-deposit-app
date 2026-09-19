@@ -2,6 +2,7 @@ import { Router } from "express";
 import { z } from "zod";
 import { prisma } from "../lib/prisma.js";
 import { requireAuth } from "../middleware/requireAuth.js";
+import { optionalCustomerAuth } from "../middleware/requireCustomerAuth.js";
 import { getTheBusiness } from "../lib/business.js";
 import { computeAvailableSlots, type WorkingHourInput } from "../lib/availability.js";
 import { getPaymentProviderByType } from "../lib/payments/index.js";
@@ -26,9 +27,12 @@ const createBookingSchema = z.object({
   customerLng: z.number().optional(),
 });
 
-// Public — a customer creating a booking has no account/session.
+// Public — works fully as a guest with no account/session. When a valid
+// customer token IS present (optionalCustomerAuth), the booking links to
+// that account so it shows up in GET /customers/me/bookings.
 bookingsRouter.post(
   "/bookings",
+  optionalCustomerAuth,
   asyncHandler(async (req, res) => {
     const parsed = createBookingSchema.safeParse(req.body);
     if (!parsed.success) {
@@ -117,6 +121,7 @@ bookingsRouter.post(
         data: {
           businessId: business.id,
           serviceId: service.id,
+          customerId: req.customerAuth?.customerId,
           customerName,
           customerEmail,
           customerPhone,
