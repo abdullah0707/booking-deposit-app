@@ -4,10 +4,15 @@ import { prisma } from "../lib/prisma.js";
 import { requireAuth } from "../middleware/requireAuth.js";
 import { getTheBusiness } from "../lib/business.js";
 import { asyncHandler } from "../lib/asyncHandler.js";
+import { resolveLocalizedContent } from "../lib/sectionSchemas.js";
 
 export const pagesRouter = Router();
 
 // Public — the storefront/app fetch a page by slug to render its sections.
+// `?locale=en|ar` (defaults to the business's default language) picks
+// which language each section's bilingual text fields resolve to —
+// callers (web, mobile) always get back plain strings, never the raw
+// {en, ar} shape the admin editor writes.
 pagesRouter.get(
   "/pages/:slug",
   asyncHandler(async (req, res) => {
@@ -22,7 +27,15 @@ pagesRouter.get(
       },
     });
     if (!page) return res.status(404).json({ error: "Page not found" });
-    res.json(page);
+
+    const locale = typeof req.query.locale === "string" ? req.query.locale : business.defaultLanguage;
+    res.json({
+      ...page,
+      sections: page.sections.map((section) => ({
+        ...section,
+        contentJson: resolveLocalizedContent(section.type, section.contentJson as Record<string, unknown>, locale),
+      })),
+    });
   }),
 );
 

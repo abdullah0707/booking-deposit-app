@@ -28,9 +28,20 @@ class _DynamicHomeScreenState extends State<DynamicHomeScreen> {
     _load();
   }
 
+  @override
+  void didUpdateWidget(DynamicHomeScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Section text is bilingual server-side (see backend's
+    // resolveLocalizedContent) — switching the EN/AR toggle must re-fetch
+    // so the resolved language actually changes, not just the app chrome.
+    if (oldWidget.locale.languageCode != widget.locale.languageCode) {
+      _load();
+    }
+  }
+
   Future<void> _load() async {
     try {
-      final result = await apiClient.get("/pages/home");
+      final result = await apiClient.get("/pages/home?locale=${widget.locale.languageCode}");
       if (!mounted) return;
       setState(() {
         _page = ContentPage.fromJson(result as Map<String, dynamic>);

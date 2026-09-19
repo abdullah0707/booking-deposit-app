@@ -59,12 +59,13 @@ businessRouter.patch(
     });
 
     // The install wizard seeds the homepage Hero with `Book with
-    // ${businessName}`. If the owner renames the business before ever
-    // touching that Hero text themselves, silently leaving the old name
-    // on their live storefront is confusing — but once they've edited it
-    // to something else, that's their content and must not be
-    // overwritten. So: only refresh it while it still matches the exact
-    // auto-generated string for the old name.
+    // ${businessName}` (in both locales — see install.ts). If the owner
+    // renames the business before ever touching that Hero text
+    // themselves, silently leaving the old name on their live storefront
+    // is confusing — but once they've edited a language's text to
+    // something else, that's their content and must not be overwritten.
+    // So: only refresh the languages that still match the exact
+    // auto-generated string for the old name, independently per language.
     if (parsed.data.name && parsed.data.name !== previous.name) {
       const homePage = await prisma.page.findFirst({
         where: { businessId, slug: "home", deletedAt: null },
@@ -73,12 +74,22 @@ businessRouter.patch(
         const hero = await prisma.section.findFirst({
           where: { pageId: homePage.id, type: "HERO", deletedAt: null },
         });
-        const content = hero?.contentJson as { title?: string } | undefined;
-        if (hero && content?.title === `Book with ${previous.name}`) {
-          await prisma.section.update({
-            where: { id: hero.id },
-            data: { contentJson: { ...content, title: `Book with ${parsed.data.name}` } },
-          });
+        const content = hero?.contentJson as { title?: unknown } | undefined;
+        const title = content?.title;
+        if (hero && title && typeof title === "object") {
+          const localized = title as { en?: string; ar?: string };
+          const oldDefault = `Book with ${previous.name}`;
+          const newDefault = `Book with ${parsed.data.name}`;
+          const nextTitle = {
+            en: localized.en === oldDefault ? newDefault : localized.en,
+            ar: localized.ar === oldDefault ? newDefault : localized.ar,
+          };
+          if (nextTitle.en !== localized.en || nextTitle.ar !== localized.ar) {
+            await prisma.section.update({
+              where: { id: hero.id },
+              data: { contentJson: { ...content, title: nextTitle } },
+            });
+          }
         }
       }
     }

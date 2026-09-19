@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Check, UploadSimple } from "@phosphor-icons/react";
 
@@ -18,6 +19,8 @@ export function ManualPaymentScreen({
   instructions: ManualInstructions;
 }) {
   const t = useTranslations("booking.manualPayment");
+  const router = useRouter();
+  const locale = usePathname().split("/")[1];
   const [file, setFile] = useState<File | null>(null);
   const [reference, setReference] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -58,6 +61,20 @@ export function ManualPaymentScreen({
         <p className="mt-2 text-sm text-ink/60">
           {t("bookingReference")}: {bookingId}
         </p>
+        <div className="mt-6 flex justify-center gap-3">
+          <button
+            onClick={() => router.push(`/${locale}`)}
+            className="rounded-xl border border-line px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-ink/5"
+          >
+            {t("backToHome")}
+          </button>
+          <button
+            onClick={() => router.push(`/${locale}/my-bookings`)}
+            className="rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
+          >
+            {t("viewMyBookings")}
+          </button>
+        </div>
       </div>
     );
   }

@@ -18,6 +18,28 @@ async function findOwnedSection(sectionId: string, businessId: string) {
   });
 }
 
+// Owner dashboard's Content editor — unlike the public GET /pages/:slug
+// (which resolves each bilingual field down to one locale's plain
+// string), this returns sections with their raw {en, ar} content intact,
+// since the editor needs both languages to show/edit at once.
+sectionsRouter.get(
+  "/admin/sections",
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const pageId = typeof req.query.pageId === "string" ? req.query.pageId : undefined;
+    if (!pageId) return res.status(400).json({ error: "pageId is required" });
+
+    const page = await findOwnedPage(pageId, req.auth!.businessId);
+    if (!page) return res.status(404).json({ error: "Page not found" });
+
+    const sections = await prisma.section.findMany({
+      where: { pageId, deletedAt: null },
+      orderBy: { order: "asc" },
+    });
+    res.json(sections);
+  }),
+);
+
 const createSectionSchema = z.object({
   pageId: z.string().uuid(),
   type: z.enum(SECTION_TYPES as [string, ...string[]]),

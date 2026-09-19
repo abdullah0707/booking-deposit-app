@@ -5,9 +5,9 @@ import type { Page } from "@/lib/sections/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
-async function fetchHomePage(): Promise<Page | null> {
+async function fetchHomePage(locale: string): Promise<Page | null> {
   try {
-    const res = await fetch(`${API_URL}/pages/home`, { cache: "no-store" });
+    const res = await fetch(`${API_URL}/pages/home?locale=${locale}`, { cache: "no-store" });
     if (!res.ok) return null;
     return (await res.json()) as Page;
   } catch {
@@ -26,8 +26,9 @@ async function fetchBusinessLogo(): Promise<string | null> {
   }
 }
 
-export default async function HomePage() {
-  const [page, businessLogoUrl] = await Promise.all([fetchHomePage(), fetchBusinessLogo()]);
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const [page, businessLogoUrl] = await Promise.all([fetchHomePage(locale), fetchBusinessLogo()]);
 
   // No "home" page content configured yet (fresh install, before the
   // owner has used the content editor) — fall back to a working default

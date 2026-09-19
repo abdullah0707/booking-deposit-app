@@ -198,7 +198,11 @@
         "imageUrls": "Image URLs (one per line)",
         "uploadImage": "Upload image",
         "uploading": "Uploading…",
-        "uploadError": "Upload failed — check the file is an image under 5MB"
+        "uploadError": "Upload failed — check the file is an image under 5MB",
+        "translateToAr": "Translate to Arabic",
+        "translateToEn": "Translate to English",
+        "translateError": "Translation failed — try again or type it manually.",
+        "translateNotConfigured": "Auto-translate isn't set up — type it manually, or set GOOGLE_TRANSLATE_API_KEY in the backend."
       },
       "noSettings": "This section has no settings — it renders automatically."
     },
@@ -245,7 +249,9 @@
       "confirmedTitle": "You're booked!",
       "pendingTitle": "Confirming your payment…",
       "failedTitle": "We couldn't confirm this booking",
-      "pendingHint": "This usually takes a few seconds."
+      "pendingHint": "This usually takes a few seconds.",
+      "backToHome": "Back to home",
+      "viewMyBookings": "View my bookings"
     },
     "cancellation": {
       "title": "Payment cancelled",
@@ -261,7 +267,24 @@
       "submit": "Submit",
       "submitError": "Couldn't submit that — try again.",
       "submitted": "Thanks! We'll confirm your booking shortly.",
-      "bookingReference": "Booking reference"
+      "bookingReference": "Booking reference",
+      "backToHome": "Back to home",
+      "viewMyBookings": "View my bookings"
+    },
+    "myBookings": {
+      "title": "My bookings",
+      "backToHome": "Back to home",
+      "loading": "Loading your bookings…",
+      "empty": "No bookings found on this device yet.",
+      "deposit": "Deposit",
+      "status": {
+        "PENDING_PAYMENT": "Awaiting payment",
+        "AWAITING_MANUAL_VERIFICATION": "Awaiting verification",
+        "CONFIRMED": "Confirmed",
+        "COMPLETED": "Completed",
+        "CANCELLED": "Cancelled",
+        "NO_SHOW": "No-show"
+      }
     }
   }
 }

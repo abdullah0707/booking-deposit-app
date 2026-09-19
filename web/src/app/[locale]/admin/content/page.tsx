@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { CaretDown, CaretUp, Pencil, Plus, Trash } from "@phosphor-icons/react";
+import { CaretDown, CaretUp, Pencil, Plus, Translate, Trash } from "@phosphor-icons/react";
 import { useAuth } from "@/lib/auth/AuthContext";
-import { api } from "@/lib/api";
+import { api, ApiError } from "@/lib/api";
 import { SECTION_LIBRARY, SECTION_TYPES, type Page, type Section, type SectionType } from "@/lib/sections/types";
 
 export default function ContentPage() {
@@ -27,10 +27,12 @@ export default function ContentPage() {
   }
 
   async function loadSections(pageId: string) {
-    const page = await api.get<Page>(`/pages/${pages?.find((p) => p.id === pageId)?.slug}`, token);
-    // The public endpoint only returns active sections; the admin screen
-    // needs the same list (trashed sections show up under Trash instead).
-    setSections(page.sections ?? []);
+    // The admin-only endpoint, not the public GET /pages/:slug — this one
+    // returns each section's raw {en, ar} content so the editor can show
+    // (and let the owner edit) both languages, instead of the single
+    // resolved-locale string the public storefront/app render from.
+    const result = await api.get<Section[]>(`/admin/sections?pageId=${pageId}`, token);
+    setSections(result);
   }
 
   // loadPages()/loadSections() only setState after their own await
@@ -289,12 +291,11 @@ function SectionFields({
   const t = useTranslations("admin.content");
 
   const textField = (key: string, label: string) => (
-    <input
+    <LocalizedTextField
       key={key}
-      placeholder={label}
-      value={(value[key] as string) ?? ""}
-      onChange={(e) => onChange({ ...value, [key]: e.target.value })}
-      className="w-full rounded-lg border border-line bg-bg px-3 py-1.5 text-sm outline-none focus:border-accent"
+      label={label}
+      value={value[key] as { en?: string; ar?: string } | string | undefined}
+      onChange={(next) => onChange({ ...value, [key]: next })}
     />
   );
 
@@ -322,6 +323,95 @@ function SectionFields({
     case "CALENDAR":
       return <p className="text-xs text-ink/50">{t("noSettings")}</p>;
   }
+}
+
+// Every buyer-authored text field is bilingual (EN/AR), shown as two
+// inputs with a one-way "translate this into the other language" button
+// on each — the owner can always just type both by hand, so a missing/
+// failing GOOGLE_TRANSLATE_API_KEY (see backend/.env.example) degrades to
+// that rather than blocking anything.
+function LocalizedTextField({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: { en?: string; ar?: string } | string | undefined;
+  onChange: (value: { en?: string; ar?: string }) => void;
+}) {
+  const t = useTranslations("admin.content");
+  const { token } = useAuth();
+  const [translating, setTranslating] = useState<"en" | "ar" | null>(null);
+  const [translateError, setTranslateError] = useState<string | null>(null);
+
+  // Content saved before this feature existed is a plain string — treat
+  // it as the English side rather than losing it.
+  const current = typeof value === "string" ? { en: value, ar: "" } : (value ?? {});
+  const en = current.en ?? "";
+  const ar = current.ar ?? "";
+
+  async function handleTranslate(from: "en" | "ar", to: "en" | "ar") {
+    const text = from === "en" ? en : ar;
+    if (!text) return;
+    setTranslating(to);
+    setTranslateError(null);
+    try {
+      const result = await api.post<{ translatedText: string }>(
+        "/admin/translate",
+        { text, target: to },
+        token,
+      );
+      onChange({ ...current, [to]: result.translatedText });
+    } catch (err) {
+      setTranslateError(
+        err instanceof ApiError && err.status === 501 ? t("fields.translateNotConfigured") : t("fields.translateError"),
+      );
+    } finally {
+      setTranslating(null);
+    }
+  }
+
+  return (
+    <div className="space-y-1">
+      <label className="text-xs font-medium text-ink/50">{label}</label>
+      <div className="flex items-center gap-1.5">
+        <input
+          placeholder="English"
+          value={en}
+          onChange={(e) => onChange({ ...current, en: e.target.value })}
+          className="w-full rounded-lg border border-line bg-bg px-3 py-1.5 text-sm outline-none focus:border-accent"
+        />
+        <button
+          type="button"
+          title={t("fields.translateToAr")}
+          disabled={!en || translating !== null}
+          onClick={() => handleTranslate("en", "ar")}
+          className="shrink-0 rounded-lg border border-line p-1.5 text-ink/50 transition hover:border-accent hover:text-accent disabled:opacity-30"
+        >
+          <Translate size={14} className={translating === "ar" ? "animate-pulse" : ""} />
+        </button>
+      </div>
+      <div className="flex items-center gap-1.5">
+        <input
+          dir="rtl"
+          placeholder="العربي"
+          value={ar}
+          onChange={(e) => onChange({ ...current, ar: e.target.value })}
+          className="w-full rounded-lg border border-line bg-bg px-3 py-1.5 text-sm outline-none focus:border-accent"
+        />
+        <button
+          type="button"
+          title={t("fields.translateToEn")}
+          disabled={!ar || translating !== null}
+          onClick={() => handleTranslate("ar", "en")}
+          className="shrink-0 rounded-lg border border-line p-1.5 text-ink/50 transition hover:border-accent hover:text-accent disabled:opacity-30"
+        >
+          <Translate size={14} className={translating === "en" ? "animate-pulse" : ""} />
+        </button>
+      </div>
+      {translateError && <p className="text-xs text-red-600">{translateError}</p>}
+    </div>
+  );
 }
 
 function GalleryField({

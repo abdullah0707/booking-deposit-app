@@ -24,6 +24,7 @@ import { contactRouter } from "./routes/contact.js";
 import { businessRouter } from "./routes/business.js";
 import { paymentMethodsRouter } from "./routes/paymentMethods.js";
 import { invoicesRouter } from "./routes/invoices.js";
+import { translateRouter } from "./routes/translate.js";
 import { NotInstalledError } from "./lib/notInstalledError.js";
 
 const app = express();
@@ -57,6 +58,7 @@ app.use(uploadsRouter);
 app.use(contactRouter);
 app.use(paymentMethodsRouter);
 app.use(invoicesRouter);
+app.use(translateRouter);
 
 // Last-resort safety net: every route handler is wrapped in asyncHandler
 // (see src/lib/asyncHandler.ts) so errors should always land here rather

@@ -198,7 +198,11 @@
         "imageUrls": "روابط الصور (كل رابط في سطر)",
         "uploadImage": "رفع صورة",
         "uploading": "جاري الرفع…",
-        "uploadError": "فشل الرفع — تأكد إن الملف صورة وحجمه أقل من 5 ميجا"
+        "uploadError": "فشل الرفع — تأكد إن الملف صورة وحجمه أقل من 5 ميجا",
+        "translateToAr": "ترجم للعربي",
+        "translateToEn": "ترجم للإنجليزي",
+        "translateError": "فشلت الترجمة — جرب تاني أو اكتبها يدويًا.",
+        "translateNotConfigured": "الترجمة التلقائية مش مفعّلة — اكتبها يدويًا، أو ضبط GOOGLE_TRANSLATE_API_KEY في السيرفر."
       },
       "noSettings": "السكشن ده مالوش إعدادات — بيتعرض أوتوماتيك."
     },
@@ -245,7 +249,9 @@
       "confirmedTitle": "تم الحجز!",
       "pendingTitle": "جاري تأكيد الدفع…",
       "failedTitle": "تعذّر تأكيد الحجز",
-      "pendingHint": "غالبًا بتاخد ثواني بس."
+      "pendingHint": "غالبًا بتاخد ثواني بس.",
+      "backToHome": "رجوع للرئيسية",
+      "viewMyBookings": "طلباتي"
     },
     "cancellation": {
       "title": "تم إلغاء الدفع",
@@ -261,7 +267,24 @@
       "submit": "إرسال",
       "submitError": "تعذّر الإرسال — جرب تاني.",
       "submitted": "شكرًا! هنأكد حجزك قريب.",
-      "bookingReference": "رقم الحجز"
+      "bookingReference": "رقم الحجز",
+      "backToHome": "رجوع للرئيسية",
+      "viewMyBookings": "طلباتي"
+    },
+    "myBookings": {
+      "title": "طلباتي",
+      "backToHome": "رجوع للرئيسية",
+      "loading": "جاري تحميل طلباتك…",
+      "empty": "مفيش أي طلبات مسجلة على الجهاز ده لسه.",
+      "deposit": "العربون",
+      "status": {
+        "PENDING_PAYMENT": "بانتظار الدفع",
+        "AWAITING_MANUAL_VERIFICATION": "بانتظار التحقق",
+        "CONFIRMED": "مؤكد",
+        "COMPLETED": "مكتمل",
+        "CANCELLED": "ملغي",
+        "NO_SHOW": "لم يحضر"
+      }
     }
   }
 }

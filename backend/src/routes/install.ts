@@ -64,9 +64,12 @@ installRouter.post(
           type: "HERO",
           order: 0,
           contentJson: {
-            title: `Book with ${businessName}`,
-            subtitle: "Pick a service, choose a time, and secure it with a deposit.",
-            ctaLabel: "Book now",
+            title: { en: `Book with ${businessName}`, ar: `Book with ${businessName}` },
+            subtitle: {
+              en: "Pick a service, choose a time, and secure it with a deposit.",
+              ar: "Pick a service, choose a time, and secure it with a deposit.",
+            },
+            ctaLabel: { en: "Book now", ar: "Book now" },
           },
         },
         { pageId: homePage.id, type: "CALENDAR", order: 1, contentJson: {} },

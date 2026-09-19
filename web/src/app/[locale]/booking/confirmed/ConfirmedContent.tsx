@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTranslations, useFormatter } from "next-intl";
 import { CheckCircle, HourglassMedium, XCircle } from "@phosphor-icons/react";
 import { api } from "@/lib/api";
@@ -16,6 +16,8 @@ interface Booking {
 export function ConfirmedContent() {
   const t = useTranslations("booking.confirmation");
   const format = useFormatter();
+  const router = useRouter();
+  const locale = usePathname().split("/")[1];
   const bookingId = useSearchParams().get("bookingId");
   const [booking, setBooking] = useState<Booking | null>(null);
 
@@ -63,6 +65,20 @@ export function ConfirmedContent() {
         </p>
       )}
       <p className="text-sm text-ink/50">{isPending ? t("pendingHint") : ""}</p>
+      <div className="mt-2 flex justify-center gap-3">
+        <button
+          onClick={() => router.push(`/${locale}`)}
+          className="rounded-xl border border-line px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-ink/5"
+        >
+          {t("backToHome")}
+        </button>
+        <button
+          onClick={() => router.push(`/${locale}/my-bookings`)}
+          className="rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
+        >
+          {t("viewMyBookings")}
+        </button>
+      </div>
     </main>
   );
 }

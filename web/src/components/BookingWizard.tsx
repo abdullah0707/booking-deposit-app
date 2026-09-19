@@ -6,6 +6,7 @@ import { CaretLeft, CaretRight, Check } from "@phosphor-icons/react";
 import { api, ApiError } from "@/lib/api";
 import { LocationPicker, type LocationValue } from "@/components/LocationPicker";
 import { ManualPaymentScreen } from "@/components/ManualPaymentScreen";
+import { saveMyBooking } from "@/lib/myBookings";
 
 type LocationType = "ON_SITE" | "CUSTOMER_ADDRESS" | "EITHER";
 
@@ -120,6 +121,7 @@ export function BookingWizard() {
         customerLat: needsAddress ? location.lat : undefined,
         customerLng: needsAddress ? location.lng : undefined,
       });
+      saveMyBooking(result.bookingId);
       if ("checkoutUrl" in result) {
         // eslint-disable-next-line react-hooks/immutability -- handing off to the external checkout page is a real navigation, not a captured-variable mutation
         window.location.href = result.checkoutUrl;
